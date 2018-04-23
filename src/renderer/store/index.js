@@ -14,7 +14,6 @@ const Grass = {
     scene: '',
     camera: '',
     renderer: '',
-    directionalLight: '',
     box: ''
   },
   mutations: {
@@ -30,31 +29,48 @@ const Grass = {
       const near = 1
       const far = 1000
       state.camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-      state.camera.position.set(0, 0, 50)
+      state.camera.position.set(0, -110, 80)
+      state.camera.rotation.x = Math.PI / 3
     },
     initRenderer (state) {
-      state.renderer = new THREE.WebGLRenderer()
+      state.renderer = new THREE.WebGLRenderer({alpha: true})
       state.renderer.setSize(state.width, state.height)
-      state.renderer.setClearColor(0xefefef)
+      state.renderer.setClearColor(0x00ff00, 0.5)
       document.getElementById('grass').appendChild(state.renderer.domElement)
     },
     initLight (state) {
-      state.directionalLight = new THREE.DirectionalLight(0xffffff)
-      state.directionalLight.position.set(1, 1, 1)
-      state.scene.add(state.directionalLight)
+      const directionalLight = new THREE.DirectionalLight(0xffffff)
+      directionalLight.position.set(1, 1, 1)
+      state.scene.add(directionalLight)
       const ambient = new THREE.AmbientLight(0x999999)
       state.scene.add(ambient)
     },
     initBox (state) {
-      const geometry = new THREE.BoxGeometry(10, 10, 10)
-      const material = new THREE.MeshPhongMaterial({color: 0x00ff00})
+      let geometry = new THREE.BoxGeometry(10, 10, 10)
+      let material = new THREE.MeshPhongMaterial({color: 0xff0000})
       state.box = new THREE.Mesh(geometry, material)
-      state.box.position.set(0, 0, 0)
+      state.box.position.set(0, 0, 50)
       state.scene.add(state.box)
+      geometry = new THREE.PlaneGeometry(100, 100, 32)
+      material = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide})
+      const plane = new THREE.Mesh(geometry, material)
+      plane.position.set(0, 0, 0)
+      state.scene.add(plane)
+      // geometry = new THREE.Geometry()
+      // const sphereTemp = new THREE.Mesh(
+      //   new THREE.SphereGeometry(5, 5, 5)
+      // )
+      // for (let i = 0; i < 10; i++) {
+      //   sphereTemp.position.set(i * 10, 0, 25)
+      //   geometry.mergeMesh(sphereTemp)
+      // }
+      // material = new THREE.MeshPhongMaterial()
+      // const sphere = new THREE.Mesh(geometry, material)
+      // state.scene.add(sphere)
     },
     render (state) {
-      state.box.rotation.x += 0.01
-      state.box.rotation.y += 0.01
+      state.box.rotation.x += 0.03
+      state.box.rotation.y += 0.03
       state.renderer.render(state.scene, state.camera)
     }
   },

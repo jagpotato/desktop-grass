@@ -5,9 +5,6 @@
 <script>
 export default {
   name: 'grass',
-  created () {
-    this.$store.dispatch('Grass/getContributions')
-  },
   mounted () {
     this.$store.dispatch('Grass/drawObject')
   }

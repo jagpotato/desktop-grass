@@ -19,8 +19,9 @@ const Grass = {
     async getContributions ({commit, state}) {
       commit('setContributions', await github.getContributions('jagpotato'))
     },
-    drawObject ({commit, state}) {
-      const three = new Three()
+    async drawObject ({commit, state, dispatch}) {
+      await dispatch('getContributions')
+      const three = new Three(state.contributions)
       three.animate()
     }
   }

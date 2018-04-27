@@ -1,7 +1,5 @@
 # desktop-grass
 
-> An electron-vue project
-
 #### Build Setup
 
 ``` bash

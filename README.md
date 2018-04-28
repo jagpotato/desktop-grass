@@ -1,5 +1,7 @@
 # desktop-grass
 
+デスクトップに草を生やす
+
 #### Build Setup
 
 ``` bash
